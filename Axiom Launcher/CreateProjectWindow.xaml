@@ -1,0 +1,25 @@
+﻿<Window x:Class="Axiom_Launcher.CreateProjectWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Axiom_Launcher"
+        mc:Ignorable="d"
+        WindowStartupLocation="CenterScreen"
+        Title="CreateProjectWindow" Height="156" Width="394"
+        Style="{DynamicResource CustomWindowStyle}">
+
+    <Grid>
+
+        <TextBox Name="ProjectNameTextBox" Text="Project0" Margin="40,40,40,0" VerticalAlignment="Top" />
+
+        <StackPanel Orientation="Horizontal" VerticalAlignment="Bottom" HorizontalAlignment="Right" >
+
+            <Button Content="Cancel" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="10" Height="27" Width="60" Click="Button_Click_1"></Button>
+            <Button Content="Create" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="10" Height="27" Width="60" Click="Button_Click"></Button>
+
+        </StackPanel>
+
+    </Grid>
+
+</Window>
