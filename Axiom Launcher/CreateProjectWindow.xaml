@@ -6,17 +6,20 @@
         xmlns:local="clr-namespace:Axiom_Launcher"
         mc:Ignorable="d"
         WindowStartupLocation="CenterScreen"
-        Title="CreateProjectWindow" Height="156" Width="394"
+        Title="Create Project" Height="156" Width="394"
         Style="{DynamicResource CustomWindowStyle}">
 
     <Grid>
 
-        <TextBox Name="ProjectNameTextBox" Text="Project0" Margin="40,40,40,0" VerticalAlignment="Top" />
+        <TextBox Name="ProjectNameTextBox" Text="Project Name" Margin="40,29,40,0" VerticalAlignment="Top" />
+        <TextBox Name="ProjectDirectoryTextBox" Text="Path" Margin="40,0,40,0" VerticalAlignment="Center" />
 
+        <CheckBox Name="IncludeAssetsCheckbox" IsChecked="True" Content="Include Default Assets" VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="10,10,10,10"/>
+        
         <StackPanel Orientation="Horizontal" VerticalAlignment="Bottom" HorizontalAlignment="Right" >
 
-            <Button Content="Cancel" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="10" Height="27" Width="60" Click="Button_Click_1"></Button>
-            <Button Content="Create" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="10" Height="27" Width="60" Click="Button_Click"></Button>
+            <Button Content="Find..." VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="10" Height="27" Width="60" Click="FindClick"></Button>
+            <Button Content="Create" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="10" Height="27" Width="60" Click="CreateClick"></Button>
 
         </StackPanel>
 
