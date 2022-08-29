@@ -1,7 +1,7 @@
-﻿using Microsoft.Win32;
-using System;
+﻿using System;
 using System.IO;
 using System.Windows;
+using Microsoft.WindowsAPICodePack.Dialogs;
 
 namespace Axiom_Launcher
 {
@@ -27,7 +27,10 @@ namespace Axiom_Launcher
 
         private void CreateClick(object sender, RoutedEventArgs e)
         {
-            ProjectDirectoryTextBox.Text += Path.DirectorySeparatorChar + ProjectNameTextBox.Text;
+            if (Path.GetFileNameWithoutExtension(ProjectDirectoryTextBox.Text) != ProjectNameTextBox.Text)
+            {
+                ProjectDirectoryTextBox.Text += Path.DirectorySeparatorChar + ProjectNameTextBox.Text;
+            }
             LastPath = ProjectDirectoryTextBox.Text;
 
             MainWindow.instance.AddProjectButton(ProjectNameTextBox.Text, ProjectDirectoryTextBox.Text, IncludeAssetsCheckbox.IsChecked);
@@ -36,15 +39,12 @@ namespace Axiom_Launcher
 
         private void FindClick(object sender, RoutedEventArgs e)
         {
-            OpenFileDialog dialog = new OpenFileDialog();
+            CommonOpenFileDialog dialog = new CommonOpenFileDialog();
             dialog.InitialDirectory = !string.IsNullOrEmpty(LastPath) ? Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) : LastPath;
-            dialog.ValidateNames = false;
-            dialog.CheckFileExists = false;
-            dialog.CheckPathExists = true;
-
+            dialog.IsFolderPicker = true;
             LastPath = dialog.InitialDirectory;
-
-            if (dialog.ShowDialog() != false)
+            
+            if (dialog.ShowDialog() == CommonFileDialogResult.Ok)
             {
                 ProjectDirectoryTextBox.Text = dialog.FileName;
             }

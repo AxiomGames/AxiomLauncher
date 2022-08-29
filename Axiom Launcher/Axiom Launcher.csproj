@@ -33,6 +33,14 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Include="..\.editorconfig" Link=".editorconfig" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.WindowsAPICodePack-Shell" Version="1.1.0" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Update="Project Template\CMakeLists.txt">
       <Generator>MSBuild:Compile</Generator>
     </None>

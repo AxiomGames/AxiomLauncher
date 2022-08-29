@@ -9,8 +9,6 @@ namespace Axiom_Launcher
 {
     public partial class MainWindow : Window
     {
-        public static MainWindow instance;
-
         class Project
         {
             public string name;
@@ -25,12 +23,28 @@ namespace Axiom_Launcher
             }
         }
 
-        private Button projectButton;
+        public static MainWindow instance { get; private set; }
+        private readonly Button projectButton;
+        private const string CMAKE_GAME_NAME = "GAME_NAME";
+
+        private static string cmakeListsTxt;
+        private static string CMakeListsText
+        {
+            get 
+            {
+                if (string.IsNullOrEmpty(cmakeListsTxt))
+                {
+                    cmakeListsTxt = File.ReadAllText("Project Template/CMakeLists.txt");
+                }
+                return cmakeListsTxt;
+            }
+        }
 
         public MainWindow()
         {
             instance = this;
             InitializeComponent();
+            
             projectButton = ProjectsPanel.Children[0] as Button;
             ProjectsPanel.Children.Clear();
         }
@@ -82,24 +96,30 @@ namespace Axiom_Launcher
                 Directory.CreateDirectory(projectDirectory);
             }
 
-            return;
+            Directory.CreateDirectory(projectDirectory + "/Assets");
+            Directory.CreateDirectory(projectDirectory + "/CSharpSource");
 
-            Directory.CreateDirectory(projectDirectory + Path.DirectorySeparatorChar + "Assets");
-            var cppSrcFolder = Directory.CreateDirectory(projectDirectory + Path.DirectorySeparatorChar + "CPPSource");
-            var csharpSrcFonlder = Directory.CreateDirectory(projectDirectory + Path.DirectorySeparatorChar + "CSharpSource");
+            {
+                using StreamWriter cmakeStream = File.CreateText(projectDirectory + "/CMakeLists.txt");
+                cmakeStream.Write(CMakeListsText.Replace(CMAKE_GAME_NAME, projectName));
+            }
 
-            File.Create(cppSrcFolder.FullName + "");
+            {
+                var cppSrcFolder = Directory.CreateDirectory(projectDirectory + "/CPPSource");
+                using StreamWriter mainCPPStream = File.CreateText(cppSrcFolder.FullName + "/Main.cpp");
+                mainCPPStream.Write("#include <iostream>\n\nint main()\n{\n\n}");
+            }
 
-            if (useDefaultAssets == true)
+            if (useDefaultAssets.Value == true)
             {
 
             }
-
         }
         
         private void CreateNewClickButtonClick(object sender, RoutedEventArgs e)
         {
             CreateProjectWindow createProjectWindow = new CreateProjectWindow();
+            createProjectWindow.Owner = this;
             createProjectWindow.Show();
         }
 
