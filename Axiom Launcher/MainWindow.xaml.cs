@@ -74,6 +74,13 @@ namespace Axiom_Launcher
                 Directory.Exists(directory + "/CPPSource");
         }
 
+        private static bool IsEngine(string directory)
+        {
+            return Directory.Exists(directory) &&
+                Directory.Exists(directory + "/Axiom") &&
+                Directory.Exists(directory + "/AxiomEngine");
+        }
+
         private void SearchProjects()
         {
             string projectsPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "/Axiom Games"; 
@@ -243,7 +250,7 @@ namespace Axiom_Launcher
 
                 if (dialog.ShowDialog() == CommonFileDialogResult.Ok)
                 {
-                    if (IsProject(dialog.FileName))
+                    if (IsEngine(dialog.FileName))
                     {
                         EnginePath = dialog.FileName;
                         PlayerPrefs.SetString("EnginePath", EnginePath);
