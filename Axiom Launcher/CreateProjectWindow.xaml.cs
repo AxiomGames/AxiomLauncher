@@ -33,7 +33,7 @@ namespace Axiom_Launcher
             }
             LastPath = ProjectDirectoryTextBox.Text;
 
-            MainWindow.instance.AddProjectButton(ProjectNameTextBox.Text, ProjectDirectoryTextBox.Text, IncludeAssetsCheckbox.IsChecked);
+            MainWindow.instance.CreateProject(ProjectNameTextBox.Text, ProjectDirectoryTextBox.Text, IncludeAssetsCheckbox.IsChecked);
             Close();
         }
 
