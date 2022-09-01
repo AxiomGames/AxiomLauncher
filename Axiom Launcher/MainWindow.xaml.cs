@@ -15,7 +15,10 @@ namespace Axiom_Launcher
         private const string CMAKE_GAME_NAME = "GAME_NAME";
 
         internal static string EnginePath = string.Empty;
-        public static string ExePath => EnginePath + "/build/AxiomEditor/Debug/AxiomEditor.exe";
+
+        private static string BuildMode = "Debug"; // add option to change this in settings
+
+        public static string GetEditorPath => EnginePath + $"/build/AxiomEditor/{BuildMode}/AxiomEditor.exe";
 
         private static string cmakeListsTxt;
         private static string CMakeListsText
@@ -86,11 +89,12 @@ namespace Axiom_Launcher
             string projectsPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "/Axiom Games"; 
             if (Directory.Exists(projectsPath))
             {
+                EnsureEnginePath();
                 foreach (var dir in Directory.GetDirectories(projectsPath))
                 {
                     if (IsProject(dir))
                     {
-                        CreateProject(GetDirectoryName(dir), dir, false);
+                        CreateProjectButton(GetDirectoryName(dir), dir);
                     }
                 }
             }
@@ -192,8 +196,6 @@ namespace Axiom_Launcher
             }
 
             CopyHeadersRec("Axiom/");
-            axiomInclude = EnginePath + "/AxiomEditor/src/";
-            CopyHeadersRec("AxiomEditor/");
 
             if (useDefaultAssets.Value == true)
             {
@@ -270,7 +272,7 @@ namespace Axiom_Launcher
             ProcessStartInfo startInfo = new ProcessStartInfo();
             startInfo.WindowStyle = ProcessWindowStyle.Hidden;
             startInfo.Arguments = @$"-editor -{project.directory}";
-            startInfo.FileName = ExePath;
+            startInfo.FileName = GetEditorPath;
 
             Process.Start(startInfo);
 
